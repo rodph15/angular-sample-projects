@@ -27,12 +27,10 @@ export class IssueReportComponent implements OnInit {
 
     this.issueForm.controls['title'].valueChanges.subscribe((
       title: string) => {
-        console.log(title);
         this.suggestions =
           this.issueService.getSuggestions(title);
       });
 
-    console.log(this.suggestions);
   }
 
   addIssue() {
