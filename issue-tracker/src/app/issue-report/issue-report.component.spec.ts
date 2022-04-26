@@ -7,13 +7,15 @@ import { IssueReportComponent } from './issue-report.component';
 describe('IssueReportComponent', () => {
   let component: IssueReportComponent;
   let fixture: ComponentFixture<IssueReportComponent>;
+  let issueService:IssuesService = new IssuesService();
+  let formBuilder:FormBuilder = new FormBuilder();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ IssueReportComponent ],
       providers: [
-        { provide: FormBuilder, useValue: new FormBuilder() },
-        { provide: IssuesService, useValue: new IssuesService() }
+        { provide: FormBuilder, useValue: formBuilder },
+        { provide: IssuesService, useValue: issueService }
       ]
     })
     .compileComponents();
@@ -32,5 +34,19 @@ describe('IssueReportComponent', () => {
   it('should issueForm be FormGroup instance', () => {
     expect(component.issueForm).toBeInstanceOf(FormGroup);
   });
+
+  it('should create issue', () =>{
+
+    component.issueForm = formBuilder.group({
+      title: ['teste'],
+      description: [''],
+      priority: ['high'],
+      type: ['Bug']
+    });
+
+    component.addIssue();
+
+    expect(issueService.getPendingIssues().length).toBeGreaterThan(0);
+  })
 
 });
