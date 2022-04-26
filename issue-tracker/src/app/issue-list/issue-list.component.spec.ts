@@ -28,4 +28,17 @@ describe('IssueListComponent', () => {
   it('should has showReportIssue false', () =>{
     expect(component.showReportIssue).toBeFalse();
   })
+
+  it('should showReportIssue be false when onCloseReport is called', () =>{
+    component.showReportIssue = true;
+    component.onCloseReport();
+    expect(component.showReportIssue).toBeFalse();
+  })
+
+  it('should issue be completed', () =>  {
+    component.onConfirm(true);
+    fixture.detectChanges();
+    expect(component.selectedIssue?.completed).not.toBeNull()
+  })
+
 });
